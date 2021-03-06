@@ -1,0 +1,39 @@
+﻿@model Proj.Models.Wiki
+
+@{
+    ViewBag.Title = "Create a wiki for an artist";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Wiki", method: FormMethod.Post))
+{
+    @Html.Label("Description", "Description:")
+    <br />
+    @Html.TextArea("Description", null, new { placeholder = "Type in the artist's description", @class = "form-control", @rows = "10" })
+    @Html.ValidationMessageFor(b => b.Description, "", new { @class = "text-danger" })
+    <br />
+
+    <label>Birth date:</label>
+    <br />
+    @Html.TextBoxFor(c => c.BirthDay, null, new { placeholder = "Day", @class = "form-control", @style = "margin-bottom:3px" })
+    @Html.ValidationMessageFor(c => c.BirthDay, "", new { @class = "text-danger" })
+
+    @Html.TextBoxFor(c => c.BirthMonth, null, new { placeholder = "Month", @class = "form-control", @style = "margin-bottom:3px" })
+    @Html.ValidationMessageFor(c => c.BirthMonth, "", new { @class = "text-danger" })
+
+    @Html.TextBoxFor(c => c.BirthYear, null, new { placeholder = "Year", @class = "form-control", @style = "margin-bottom:3px", @type = "number" })
+    @Html.ValidationMessageFor(c => c.BirthYear, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.LabelFor(p => p.DebutYear, "Year of debut:")
+    <br />
+    @Html.TextBoxFor(p => p.DebutYear, null, new { placeholder = "Type in the artist's debut year", @class = "form-control" })
+    @Html.ValidationMessageFor(p => p.DebutYear, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    <button class="btn btn-outline-dark" type="submit">Create</button>
+}

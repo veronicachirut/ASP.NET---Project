@@ -1,0 +1,31 @@
+﻿@model Proj.Models.Track
+
+@{
+    ViewBag.Title = "Add new track";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Track", method: FormMethod.Post))
+{
+    @Html.Label("Title", "Track's title:")
+    <br />
+    @Html.TextBoxFor(b => b.Title, null, new { placeholder = "Type in the track's title", @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.Title, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Time", "Time:")
+    <br />
+    @Html.TextBoxFor(b => b.Time, null, new { placeholder = "Type in the track's time", @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.Time, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Artist", "Artist:")
+    <br />
+    @Html.DropDownListFor(b => b.ArtistId, new SelectList(Model.ArtistList, "Value", "Text"), "Choose an artist", new { @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.ArtistId, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    <button class="btn btn-outline-dark" type="submit">Add track</button>
+}

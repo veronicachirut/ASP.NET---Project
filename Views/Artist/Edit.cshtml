@@ -1,0 +1,66 @@
+﻿@model Proj.Models.ArtistWikiViewModel
+
+@{
+    var str = "Update info for " + Model.Name;
+    ViewBag.Title = str;
+}
+
+<br />
+<h2>@ViewBag.Title</h2>
+<br />
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Artist"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Label("Name", "Name:")
+    <br />
+    @Html.EditorFor(b => b.Name, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.Name, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Country", "Country:")
+    <br />
+    @Html.EditorFor(b => b.Country, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.Country, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("Description", "Description:")
+    <br />
+    @Html.EditorFor(b => b.Description, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.Description, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("BirthYear", "Birth Year:")
+    <br />
+    @Html.EditorFor(b => b.BirthYear, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.BirthYear, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("BirthMonth", "Birth Month:")
+    <br />
+    @Html.EditorFor(b => b.BirthMonth, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.BirthMonth, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("BirthDay", "Birth Day:")
+    <br />
+    @Html.EditorFor(b => b.BirthDay, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.BirthDay, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("DebutYear", "Debut Year:")
+    <br />
+    @Html.EditorFor(b => b.DebutYear, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.DebutYear, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    <button class="btn btn-outline-dark" type="submit">Update</button>
+}
+

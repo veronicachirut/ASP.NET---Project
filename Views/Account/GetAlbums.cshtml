@@ -1,0 +1,28 @@
+﻿
+@{ ViewBag.Title = "My Albums"; }
+
+<br />
+<h2>@ViewBag.Title</h2>
+<br />
+
+@if (Model.Albums.Count > 0)
+{
+    foreach (var album in Model.Albums)
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="jumbotron">
+                    <p>@album.Title</p>
+                </div>
+
+                @Html.Label("Tracks", "Tracks:")
+                <ul>
+                    @foreach (var track in album.Tracks)
+                    {
+                        <div class="panel-body"><li>@track.Title</li></div>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+}

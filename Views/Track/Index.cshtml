@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Tracks";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Add new track", "New")
+}
+<br />
+
+@foreach (var track in ViewBag.Tracks)
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="well"><h3>@track.Title, <i><small>@track.Artist.Name</small></i></h3></div>
+
+            @using (Html.BeginForm(actionName: "Details", controllerName: "Track", method: FormMethod.Get,
+                routeValues: new { id = track.TrackId }))
+            {
+                <button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="glyphicon glyphicon-sunglasses"></p> Details</button>
+            }
+
+        </div>
+    </div>
+}

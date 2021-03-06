@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Albums";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Add new album", "New")
+}
+<br />
+
+@foreach (var album in ViewBag.Albums)
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="jumbotron">
+                <h2>@album.Title</h2>
+            </div>
+
+
+            @using (Html.BeginForm(actionName: "Details", controllerName: "Album", method: FormMethod.Get,
+                routeValues: new { id = album.AlbumId }))
+            {
+                <button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="glyphicon glyphicon-sunglasses"></p> Details</button>
+            }
+
+        </div>
+    </div>
+    <br />
+    <br />
+}
+

@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+<h2>@ViewBag.Title</h2>
+<table class="table">
+    <thead>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Update</th>
+    <th>Details</th>
+    <th>Delete</th>
+    </thead>
+    <tbody>
+        @foreach (var user in ViewBag.UsersList)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@Html.ActionLink("Update", "Edit", new { id = user.Id })</td>
+                <td>@Html.ActionLink("View details", "Details", new { id = user.Id })</td>
+                <td>
+                    @using (Html.BeginForm(actionName: "Delete", controllerName: "Users", method: FormMethod.Post, routeValues: new { id = user.Id }))
+                    {
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="glyphicon glyphicon-trash"></p> Delete</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Artists";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Add new artist", "New")
+}
+<br />
+
+@foreach (var artist in ViewBag.Artists)
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="well"><h3>@artist.Name</h3></div>
+
+            @using (Html.BeginForm(actionName: "Details", controllerName: "Artist", method: FormMethod.Get,
+                routeValues: new { id = artist.ArtistId }))
+            {
+                <button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="glyphicon glyphicon-sunglasses"></p> Details</button>
+            }
+
+        </div>
+    </div>
+}
+

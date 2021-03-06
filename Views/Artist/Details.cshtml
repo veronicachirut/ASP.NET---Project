@@ -1,0 +1,65 @@
+﻿@model Proj.Models.Artist
+@{
+    var str = Model.Name + "'s Details";
+    ViewBag.Title = str;
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<br />
+
+<table class="table">
+    <tbody>
+        <tr>
+            <td>@Html.Label("Country", "Country:")</td>
+            <td>@Model.Country</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(p => p.Wiki.Description, "Description:", new { style = "margin-right:10px" })</td>
+            <td>@Html.DisplayFor(p => p.Wiki.Description)</td>
+        </tr>
+        <tr>
+            <td><label style="margin-right:10px">Birth date:</label></td>
+            <td>@Html.DisplayFor(p => p.Wiki.BirthDay).@Html.DisplayFor(p => p.Wiki.BirthMonth).@Html.DisplayFor(p => p.Wiki.BirthYear)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(p => p.Wiki.DebutYear, "Year of Debut:", new { style = "margin-right:10px" })</td>
+            <td>@Html.DisplayFor(p => p.Wiki.DebutYear)</td>
+    </tbody>
+</table>
+<br />
+
+@if (Model.Tracks != null)
+{
+    <div class="container">
+        <h2>@Html.Label("Tracks", "Tracks:")</h2>
+        <div class="panel panel-default">
+            <ul>
+                @foreach (var track in Model.Tracks)
+                {
+                    <div class="panel-body"><li>@track.Title</li></div>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    using (Html.BeginForm(actionName: "Edit", controllerName: "Artist", method: FormMethod.Get, routeValues: new { id = Model.ArtistId }))
+    {
+<button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="glyphicon glyphicon-edit"></p> Edit</button>
+    }
+
+    using (Html.BeginForm(actionName: "Delete", controllerName: "Artist", method: FormMethod.Post, routeValues: new { id = Model.ArtistId }))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="glyphicon glyphicon-trash"></p> Delete</button>
+    }
+
+    using (Html.BeginForm(actionName: "NewTrack", controllerName: "Artist", method: FormMethod.Get,
+                        routeValues: new { id = Model.ArtistId }))
+    {
+        <button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="	glyphicon glyphicon-plus"></p> Add track</button>
+    }
+}

@@ -1,0 +1,49 @@
+﻿@model Proj.Models.Track
+
+@{
+    ViewBag.Title = "Update track";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Track"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(b => b.TrackId)
+    <br />
+    <br />
+
+    @Html.Label("Title", "Title:")
+    <br />
+    @Html.EditorFor(b => b.Title, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.Title, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Time", "Time:")
+    <br />
+    @Html.EditorFor(b => b.Time, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(b => b.Time, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Artist", "Artist:")
+    <br />
+    @Html.DropDownListFor(b => b.ArtistId, new SelectList(Model.ArtistList, "Value", "Text"), "Choose an artist", new { @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.ArtistId, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.LabelFor(b => b.AlbumsList, "Choose albums:")
+    <br />
+    for (int i = 0; i < Model.AlbumsList.Count(); i++)
+    {
+        @Html.HiddenFor(b => b.AlbumsList[i].Id)
+        @Html.HiddenFor(b => b.AlbumsList[i].Title)
+        @Html.CheckBoxFor(b => b.AlbumsList[i].Checked)
+        @Html.DisplayFor(b => b.AlbumsList[i].Title)
+        <br />
+    }
+    <br />
+
+    <button class="btn btn-outline-dark" type="submit">Update</button>
+}

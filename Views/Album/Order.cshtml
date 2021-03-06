@@ -1,0 +1,34 @@
+﻿@model Proj.Models.Album
+
+@{
+    ViewBag.Title = "Order";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "Order", controllerName: "Album")) {
+    @Html.HttpMethodOverride(HttpVerbs.Put) 
+
+    @Html.HiddenFor(b => b.AlbumId)
+    <br />
+
+    @Html.Label("Title", "Title:")
+    <br />
+    <p>@Model.Title</p>
+    <br />
+
+    if (Model.Tracks.Count > 0)
+    {
+        @Html.Label("Tracks", "Tracks:")
+        <br />
+        <ul>
+            @foreach (var track in Model.Tracks)
+            {
+                <li>@track.Title by @track.Artist.Name</li>
+            }
+        </ul>
+    }
+
+    <br />
+    <button class="btn btn-outline-dark" type="submit">Confirm</button>
+}

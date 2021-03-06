@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Artist's wikis";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<br />
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Add new wiki", "New")
+}
+<br />
+
+@foreach (var wiki in ViewBag.Wikis)
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            @Html.Label("Description", "Description:")
+            <br />
+            <p>@wiki.Description</p>
+
+            <label>Birth date:</label>
+            <br />
+            <p>@wiki.BirthDay.@wiki.BirthMonth.@wiki.BirthYear</p>
+
+            @Html.Label("DebutYear", "Debut Year:")
+            <br />
+            <p>@wiki.DebutYear</p>
+
+            @if (@wiki.Artist != null)
+            {
+                @Html.Label("Name", "Artist Name:")
+                <br />
+                <p>@wiki.Artist.Name</p>
+            }
+
+            @if (User.IsInRole("Admin"))
+            {
+                using (Html.BeginForm(actionName: "Edit", controllerName: "Wiki", method: FormMethod.Get, routeValues: new { id = wiki.WikiId }))
+                {
+                    <button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="glyphicon glyphicon-edit"></p> Edit</button>
+                }
+
+                using (Html.BeginForm(actionName: "Delete", controllerName: "Wiki", method: FormMethod.Post, routeValues: new { id = wiki.WikiId }))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button style="margin-right:5px" class="btn btn-outline-dark" type="submit"><p class="glyphicon glyphicon-trash"></p> Delete</button>
+                }
+            }
+        </div>
+    </div>
+}
+
+
+

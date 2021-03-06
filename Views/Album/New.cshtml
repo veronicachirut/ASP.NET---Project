@@ -1,0 +1,39 @@
+﻿@model Proj.Models.Album
+
+@{
+    ViewBag.Title = "Add new album";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Album", method: FormMethod.Post))
+{
+    @Html.Label("Title", "Album's title:")
+    <br />
+    @Html.TextBoxFor(b => b.Title, null, new { placeholder = "Type in the album's title", @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.Title, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Year", "Year:")
+    <br />
+    @Html.TextBoxFor(b => b.Year, null, new { placeholder = "Type in the album's year release", @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.Year, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.LabelFor(b => b.TracksList, "Choose tracks:")
+    <br />
+    for (int i = 0; i < Model.TracksList.Count(); i++)
+    {
+        @Html.HiddenFor(b => b.TracksList[i].Id)
+        @Html.HiddenFor(b => b.TracksList[i].Title)
+        @Html.HiddenFor(b => b.TracksList[i].ArtistName)
+        @Html.CheckBoxFor(b => b.TracksList[i].Checked)
+        @Html.DisplayFor(b => b.TracksList[i].Title)
+        <span> by @Model.TracksList[i].ArtistName</span>
+        <br />
+    }
+
+    <button class="btn btn-primary" type="submit">Add album</button>
+}
+
+@Html.ActionLink("Add new track", "../Track/New")

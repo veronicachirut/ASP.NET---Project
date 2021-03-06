@@ -1,0 +1,98 @@
+﻿@model Proj.Models.Album
+@{
+    ViewBag.Title = "Album details";
+}
+
+<h2>@Model.Title</h2>
+
+<table class="table">
+    <thead>
+        <th>Title</th>
+        <th>Year</th>
+
+        @if (User.IsInRole("Admin")) 
+        { 
+            <th>Edit</th>
+            <th>Delete</th>
+        }
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <th>Add to profile</th>
+        }
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>@Model.Title</td>
+            <td>@Model.Year</td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @using (Html.BeginForm(actionName: "Edit", controllerName: "Album", method: FormMethod.Get, routeValues: new { id = Model.AlbumId }))
+                    {
+                        <button style="margin-right:5px" class="btn btn-secondary" type="submit"><p class="glyphicon glyphicon-edit"></p> Edit</button>
+                    }
+                </td>
+                <td>
+                    @using (Html.BeginForm(actionName: "Delete", controllerName: "Album", method: FormMethod.Post, routeValues: new { id = Model.AlbumId }))
+                    {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button style="margin-right:5px" class="btn btn-secondary" type="submit"><p class="glyphicon glyphicon-trash"></p> Delete</button>
+                    }
+                    <br />
+                </td>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+
+                    @using (Html.BeginForm(actionName: "Order", controllerName: "Album", method: FormMethod.Get, routeValues: new { id = Model.AlbumId }))
+                    {
+                        <button style="margin-right:5px" class="btn btn-secondary" type="submit"><p class="glyphicon glyphicon-save"></p> Add</button>
+                    }
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+
+
+@if (Model.Tracks.Count > 0)
+{
+    @Html.Label("Tracks", "Tracks:")
+    <br />
+    <ul>
+        @foreach (var track in Model.Tracks)
+        {
+            <li>@track.Title by @track.Artist.Name</li>
+        }
+    </ul>
+}
+@*
+@if (User.IsInRole("Admin"))
+{
+    using (Html.BeginForm(actionName: "Edit", controllerName: "Album", method: FormMethod.Get, routeValues: new { id = Model.AlbumId }))
+    {
+        <button style="margin-right:5px" class="btn btn-secondary" type="submit">Update</button>
+    }
+
+    using (Html.BeginForm(actionName: "Delete", controllerName: "Album", method: FormMethod.Post, routeValues: new { id = Model.AlbumId }))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button style="margin-right:5px" class="btn btn-secondary" type="submit"><p class="glyphicon glyphicon-trash"></p> Delete</button>
+    }
+    <br />
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+
+    using (Html.BeginForm(actionName: "Order", controllerName: "Album", method: FormMethod.Get, routeValues: new { id = Model.AlbumId }))
+    {
+        <button style="margin-right:5px" class="btn btn-secondary" type="submit">Add to your profile</button>
+    }
+}
+*@

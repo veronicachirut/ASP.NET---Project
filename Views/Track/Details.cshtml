@@ -1,0 +1,57 @@
+﻿@model Proj.Models.Track
+
+@{
+    var str = Model.Title + "'s details";
+    ViewBag.Title = str;
+}
+
+<h2>@Model.Title</h2>
+<br />
+
+<table class="table">
+    <tbody>
+        <tr>
+            <td>@Html.Label("Time", "Track's time:")</td>
+            <td>@Model.Time</td>
+        </tr>
+
+        @if (Model.Artist != null)
+        {
+            <tr>
+                <td>@Html.Label("Artist", "Artist:")</td>
+                <td>@Model.Artist.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Albums.Count > 0)
+{
+    <div class="container">
+        <h2>@Html.Label("Albums", "Albums:")</h2>
+        <div class="panel panel-default">
+            <ul>
+                @foreach (var album in Model.Albums)
+                {
+                    <div class="panel-body"><li>@album.Title</li></div>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    using (Html.BeginForm(actionName: "Edit", controllerName: "Track", method: FormMethod.Get, routeValues: new { id = Model.TrackId }))
+    {
+        <button style="margin-right:5px" class="btn btn-outline-dark" type="submit">Edit</button>
+    }
+
+    using (Html.BeginForm(actionName: "Delete", controllerName: "Track", method: FormMethod.Post, routeValues: new { id = Model.TrackId }))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button style="margin-right:5px" class="btn btn-outline-dark" type="submit">Delete</button>
+    }
+    <br />
+}
+
